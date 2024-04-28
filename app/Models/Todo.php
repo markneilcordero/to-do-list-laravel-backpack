@@ -21,7 +21,7 @@ class Todo extends Model
     protected $primaryKey = 'task_id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = [];
     // protected $hidden = [];
 
     /*
