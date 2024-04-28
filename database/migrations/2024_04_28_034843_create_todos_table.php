@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->date('due_date');
-            $table->enum('status', ['pending', 'in_progress', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'in_progress', 'completed', 'canceled'])->default('pending');
             $table->timestamps();
         });
     }

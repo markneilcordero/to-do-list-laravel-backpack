@@ -19,9 +19,14 @@ class Todo extends Model
 
     protected $table = 'todos';
     protected $primaryKey = 'task_id';
-    // public $timestamps = false;
-    protected $guarded = ['id'];
-    protected $fillable = [];
+    public $timestamps = true;
+    protected $guarded = [];
+    protected $fillable = [
+      'title',
+      'description',
+      'due_date',
+      'status',
+    ];
     // protected $hidden = [];
 
     /*

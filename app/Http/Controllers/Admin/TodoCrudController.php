@@ -56,12 +56,41 @@ class TodoCrudController extends CrudController
     protected function setupCreateOperation()
     {
         CRUD::setValidation(TodoRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
+        // CRUD::setFromDb(); // set fields from db columns.
 
         /**
          * Fields can be defined using the fluent syntax:
          * - CRUD::field('price')->type('number');
          */
+        CRUD::field([
+          'name' => 'title',
+          'label' => 'Title',
+          'type' => 'text',
+        ]);
+
+        CRUD::field([
+          'name' => 'description',
+          'label' => 'Description',
+          'type' => 'textarea',
+        ]);
+
+        CRUD::field([
+          'name' => 'due_date',
+          'label' => 'Due Date',
+          'type' => 'date',
+        ]);
+
+        CRUD::field([
+          'name' => 'status',
+          'label' => 'Status',
+          'type' => 'enum',
+          'options' => [
+            'pending' => 'Pending',
+            'in_progress' => 'In Progress',
+            'completed' => 'Completed',
+            'canceled' => 'Canceled',
+          ]
+        ]);
     }
 
     /**
@@ -73,5 +102,17 @@ class TodoCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function store(TodoRequest $request)
+    {
+      $todo = new \App\Models\Todo();
+      $todo->title = $request->input('title');
+      $todo->description = $request->input('description');
+      $todo->due_date = $request->input('due_date');
+      $todo->status = $request->input('status');
+      $todo->save();
+      \Alert::add('success', 'Todo created successfully!')->flash();
+      return redirect()->back();
     }
 }
